@@ -1,23 +1,23 @@
-% Section - References
+% Section 5 - References
 % Roberto Masocco <roberto.masocco@uniroma2.it>
 % April 12, 2026
 
 % ### References ###
 \section{References}
-\graphicspath{{figs/references/}}
+\graphicspath{{figs/section5/}}
 
-% --- What is a reference? ---
+% --- References ---
 \begin{frame}{References}{What is a reference?}
 	\justifying
-	A \textbg{reference} is an \textbf{alias} — an alternative name for an already-existing object.\\
+	A \textbg{reference} is an \textbg{alias} — an alternative name for an already-existing object.\\
 	\bigskip
 	Declared with \texttt{\&} after the type:
-	\begin{itemize}
+	\begin{enumerate}
 		\item \texttt{int x = 42;}
-		\item \texttt{int\& ref = x;} \quad — \texttt{ref} and \texttt{x} now name the \textbg{same object}.
-	\end{itemize}
+		\item \texttt{int \& ref = x;} \texttt{// ref} and \texttt{x} now name the \textbg{same object}
+	\end{enumerate}
 	\bigskip
-	References differ from pointers in three important ways:
+	\textbg{References differ from pointers} in three important ways:
 	\begin{itemize}
 		\item a reference \textbg{cannot be null} — it must be bound to an object at declaration;
 		\item a reference \textbg{cannot be rebound} — once initialized, it always refers to the same object;
@@ -29,46 +29,40 @@
 		A reference is \textbf{not} a new object. No copy is made, no new memory is allocated.
 	\end{block}
 \end{frame}
-
-% --- References as function parameters ---
 \begin{frame}{References}{References as function parameters}
 	\justifying
 	The most common use of references is in \textbg{function parameter lists}.\\
 	\bigskip
-	Passing by value in C copies the argument — expensive for large objects, impossible for non-copyable ones.\\
+	Passing by value in C copies the argument — \textbg{expensive} for large objects, impossible for non-copyable ones.\\
 	\bigskip
 	Passing by reference gives the function \textbg{direct access} to the caller's object:
 	\begin{itemize}
-		\item \textbg{modifiable reference} (\texttt{T\&}): the function may read and \textbf{write} the argument;
-		\item \textbg{constant reference} (\texttt{const T\&}): the function may only \textbf{read} the argument — no copy, no modification.
+		\item \textbg{modifiable reference} (\texttt{T \&}): the function may read and \textbg{write} the argument;
+		\item \textbg{constant reference} (\texttt{const T \&}): the function may only \textbg{read} the argument.
 	\end{itemize}
 	\bigskip
-	\texttt{const T\&} is the idiomatic way to pass \textbg{large objects} that should not be modified:
+	\texttt{const T \&} is the idiomatic way to pass \textbg{large objects} that should not be modified:
 	\begin{itemize}
 		\item avoids the cost of a copy;
 		\item the \texttt{const} qualifier makes the intent explicit and is enforced by the compiler.
 	\end{itemize}
 \end{frame}
-
-% --- References vs pointers ---
 \begin{frame}{References}{References vs pointers}
 	\justifying
 	Both refer to an object without copying it, but the choice between them conveys \textbg{intent}.\\
-	\bigskip
 	Prefer a \textbg{reference} when:
 	\begin{itemize}
 		\item the referred object \textbg{always exists} for the lifetime of the reference;
-		\item no rebinding or pointer arithmetic is needed;
-		\item the code should read as naturally as if using the object directly.
+		\item \textbg{no rebinding} or pointer arithmetic is needed;
+		\item the code should \textbg{read as naturally} as if using the object directly.
 	\end{itemize}
-	\bigskip
+	\medskip
 	Prefer a \textbg{pointer} when:
 	\begin{itemize}
 		\item the object may be \textbg{absent} (\texttt{nullptr} is a valid state);
 		\item ownership or lifetime \textbg{must be managed} explicitly;
-		\item pointer arithmetic or array indexing is required.
+		\item pointer arithmetic or array \textbg{indexing} is required.
 	\end{itemize}
-	\bigskip
 	\begin{block}{}
 		\centering
 		In modern C++, raw pointers are used \textbf{only for non-owning observation}.\\

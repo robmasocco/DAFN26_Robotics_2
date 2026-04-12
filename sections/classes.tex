@@ -1,17 +1,17 @@
-% Section - Classes
+% Section 2 - Classes
 % Roberto Masocco <roberto.masocco@uniroma2.it>
 % April 12, 2026
 
 % ### Classes ###
 \section{Classes}
-\graphicspath{{figs/classes/}}
+\graphicspath{{figs/section2/}}
 
-% --- class vs struct ---
+% --- Classes ---
 \begin{frame}{Classes}{\texttt{class} vs \texttt{struct}}
 	\justifying
-	C++ keeps the \texttt{struct} keyword from C, but gives it new powers: member functions, constructors, and access control.\\
+	C++ keeps the \texttt{struct} keyword from C, but gives it new powers: \textbg{member functions}, \textbg{constructors}, and \textbg{access control}.\\
 	\bigskip
-	It also introduces \texttt{class}. The \textbg{only difference} between the two is the \textbf{default access specifier}:
+	It also introduces \texttt{class}. The \textbg{only difference} between the two is the \textbg{default access specifier}:
 	\begin{itemize}
 		\item members of a \texttt{struct} are \textbg{public} by default;
 		\item members of a \texttt{class} are \textbg{private} by default.
@@ -20,97 +20,81 @@
 	By convention:
 	\begin{itemize}
 		\item \texttt{struct} is used for \textbg{plain data aggregates} with no significant behavior;
-		\item \texttt{class} is used when \textbg{encapsulation} and \textbg{invariants} matter.
+		\item \texttt{class} is used when \textbg{encapsulation} and \textbg{operations} matter.
 	\end{itemize}
 \end{frame}
-
-% --- Access specifiers ---
 \begin{frame}{Classes}{Access specifiers}
 	\justifying
 	Access specifiers control the \textbg{visibility} of class members to the outside world.\\
 	\bigskip
 	There are three:
 	\begin{itemize}
-		\item \textbg{\texttt{public}}: accessible from anywhere;
-		\item \textbg{\texttt{protected}}: accessible from the class itself and from \textbf{derived classes};
-		\item \textbg{\texttt{private}}: accessible \textbf{only} from the class itself.
+		\item \texttt{public}: accessible from anywhere;
+		\item \texttt{protected}: accessible from the class itself and from \textbg{derived classes};
+		\item \texttt{private}: accessible \textbg{only} from the class itself, \textbg{not even from derived classes}.
 	\end{itemize}
 	\bigskip
-	A specifier applies to all members declared \textbf{below it}, until the next specifier.\\
+	A specifier applies to all members declared \textbg{below it}, until the next specifier.\\
 	\bigskip
 	Good practice is to expose only what is \textbg{necessary}:
 	\begin{itemize}
-		\item data members are almost always \texttt{private};
+		\item \textbg{data members} are almost always \texttt{private};
 		\item the \textbg{public interface} is kept minimal and stable.
 	\end{itemize}
 \end{frame}
-
-% --- Constructors and destructors ---
+\begin{frame}{Classes}{Member functions and the \texttt{this} pointer}
+	\justifying
+	Functions declared inside a class are called \textbg{member functions} (or \emph{methods}).\\
+    They have \textbg{direct access to all data members of the class}, regardless of access specifiers.\\
+	\bigskip
+	Inside any non-static member function, the keyword \texttt{this} is an implicit \textbg{pointer to the object on which the function was called}.\\
+	\bigskip
+	Member functions that \textbg{do not modify the object} should be declared \texttt{const}: the \textbg{compiler} then enforces the constraint.
+\end{frame}
 \begin{frame}{Classes}{Constructors and destructors}
 	\justifying
 	Every class can define \textbg{special member functions} that the compiler calls automatically.\\
 	\bigskip
-	The \textbg{constructor} is called when an object is \textbf{created}:
+	The \textbg{constructor} is called when an object is \textbg{created}:
 	\begin{itemize}
 		\item its name is the class name, it has no return type;
 		\item it initializes data members and acquires resources;
-		\item a class may have \textbg{multiple constructors} with different parameter lists (\textbf{overloading});
+		\item a class may have \textbg{multiple constructors} with different parameter lists (\textbg{overloading});
 		\item if none is defined, the compiler generates a \textbg{default constructor}.
 	\end{itemize}
 	\bigskip
-	The \textbg{destructor} is called when an object is \textbf{destroyed}:
+	The \textbg{destructor} is called when an object is \textbg{destroyed}:
 	\begin{itemize}
 		\item its name is the class name preceded by \texttt{\textasciitilde};
-		\item it releases resources and performs cleanup;
+		\item it \textbg{releases resources} and \textbg{performs cleanup};
 		\item there is \textbg{exactly one} destructor per class, it takes no arguments.
 	\end{itemize}
+\end{frame}
+\begin{frame}{Classes}{Constructors and destructors}
 	\begin{alertblock}{Guarantee}
 		\justifying
 		\textbf{The destructor is always called}, regardless of how the object's scope ends — even in the presence of exceptions.
 	\end{alertblock}
 \end{frame}
-
-% --- Member functions and this ---
-\begin{frame}{Classes}{Member functions and the \texttt{this} pointer}
-	\justifying
-	Functions declared inside a class are called \textbg{member functions} (or \textit{methods}).\\
-	They have direct access to all data members of the class, regardless of access specifiers.\\
-	\bigskip
-	Inside any non-static member function, the keyword \textbg{\texttt{this}} is an implicit pointer to the \textbf{object on which the function was called}.\\
-	\bigskip
-	It is rarely needed explicitly, but it is always there:
-	\begin{itemize}
-		\item it allows disambiguating between a local variable and a member with the same name;
-		\item it allows returning a reference to the object itself (\texttt{return *this}).
-	\end{itemize}
-	\bigskip
-	Member functions that do not modify the object should be declared \textbg{\texttt{const}}:
-	\begin{itemize}
-		\item the compiler then enforces the constraint;
-		\item they can be called on \texttt{const} objects or through \texttt{const} references.
-	\end{itemize}
-\end{frame}
-
-% --- Header and source split ---
 \begin{frame}{Classes}{Separating declaration from definition}
 	\justifying
 	In C++, a class is typically \textbg{declared} in a header file (\texttt{.hpp}) and \textbg{defined} in a source file (\texttt{.cpp}).\\
 	\bigskip
-	The \textbf{header} contains:
+	The \textbg{header} contains
 	\begin{itemize}
-		\item the class declaration with all member names and types;
-		\item inline function definitions (small, frequently called functions).
+		\item the \textbg{class declaration} with all member names and types;
+		\item \textbg{inline function definitions} (small, frequently called functions).
 	\end{itemize}
 	\bigskip
-	The \textbf{source file} contains:
+	The \textbg{source file} contains
 	\begin{itemize}
-		\item the full definitions of all non-inline member functions;
+		\item the full \textbg{definitions} of all non-inline member functions;
 		\item member function names are qualified with \texttt{ClassName::}.
 	\end{itemize}
 	\bigskip
 	\begin{block}{Why split?}
 		\justifying
-		The header is the \textbg{public contract} of the class — it is what other translation units include.
-		Keeping implementation in \texttt{.cpp} files reduces \textbg{compile-time dependencies} and hides internals.
+		The header is the \textbf{public contract} of the class — it is what other translation units include.
+		Keeping implementation in \texttt{.cpp} files reduces \textbf{compile-time dependencies} and hides internals.
 	\end{block}
 \end{frame}

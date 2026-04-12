@@ -1,30 +1,28 @@
-% Section - Namespaces
+% Section 6 - Namespaces
 % Roberto Masocco <roberto.masocco@uniroma2.it>
 % April 12, 2026
 
 % ### Namespaces ###
 \section{Namespaces}
-\graphicspath{{figs/namespaces/}}
+\graphicspath{{figs/section6/}}
 
-% --- The problem ---
+% --- Namespaces ---
 \begin{frame}{Namespaces}{The naming collision problem}
 	\justifying
 	C has a single \textbg{global namespace}: every function, variable, and type defined at file scope lives in the same flat space.\\
 	\bigskip
-	In small programs this is manageable. In large codebases that integrate \textbg{multiple libraries} — written by different authors, at different times — it becomes a problem:
+	In small programs this is manageable. In large codebases that integrate \textbg{multiple libraries} — written by different authors, at different times — it becomes a \textbg{problem}:
 	\begin{itemize}
-		\item two libraries may define a function named \texttt{init()}, a struct named \texttt{Node}, or a constant named \texttt{MAX\_SIZE};
-		\item the linker cannot resolve the collision;
+		\item \textbg{two libraries} may define a function named \texttt{init()}, a struct named \texttt{Node}, or a constant named \texttt{MAX\_SIZE};
+		\item the linker cannot resolve the \textbg{collision};
 		\item C works around this with \textbg{name prefixes} by convention: \texttt{pthread\_mutex\_t}, \texttt{SDL\_Init()}, \texttt{PTHREAD\_MUTEX\_INITIALIZER}...
 	\end{itemize}
 	\bigskip
 	\begin{block}{}
 		\centering
-		C++ solves this with \textbf{namespaces} — a language-level partitioning of the global name space.
+		C++ solves this with \textbf{namespaces} — a language-level \textbf{partitioning} of the global name space.
 	\end{block}
 \end{frame}
-
-% --- Namespaces in C++ ---
 \begin{frame}{Namespaces}{Namespaces in C++}
 	\justifying
 	A \textbg{namespace} is a named scope that groups related declarations:
@@ -34,7 +32,7 @@
 		\item may be \textbg{reopened} across multiple files — all declarations in the same named namespace belong to the same scope.
 	\end{itemize}
 	\bigskip
-	Names inside a namespace are accessed via the \textbg{scope resolution operator} \texttt{::}:
+	Names inside a namespace are accessed via the \textbg{scope resolution operator} \texttt{::}
 	\begin{itemize}
 		\item \texttt{std::vector}, \texttt{std::cout}, \texttt{std::string} — the C++ standard library lives in \texttt{std};
 		\item \texttt{rclcpp::Node}, \texttt{rclcpp::Publisher} — the ROS 2 client library lives in \texttt{rclcpp}.
@@ -42,38 +40,28 @@
 	\bigskip
 	Namespaces may be \textbg{nested}: \texttt{rclcpp::executors::MultiThreadedExecutor} — each \texttt{::} steps one level deeper, just like dots in a domain name (\emph{e.g.}, \texttt{ing.uniroma2.it}).
 \end{frame}
-
-% --- using declarations ---
 \begin{frame}{Namespaces}{\texttt{using} declarations and directives}
 	\justifying
 	Writing the full namespace prefix every time can become verbose.\\
 	C++ provides two mechanisms to shorten names.\\
 	\bigskip
-	A \textbg{\texttt{using} declaration} introduces a \textbf{single name} into the current scope:
+	A \texttt{using} \textbg{declaration} introduces a \textbg{single name} into the current scope:
 	\begin{itemize}
 		\item \texttt{using std::vector;} — after this, \texttt{vector} alone refers to \texttt{std::vector}.
 	\end{itemize}
 	\bigskip
-	A \textbg{\texttt{using namespace} directive} imports \textbf{all names} from a namespace:
+	A \texttt{using namespace} \textbg{directive} imports \textbg{all names} from a namespace:
 	\begin{itemize}
-		\item \texttt{using namespace std;} — convenient in small examples, \textbg{dangerous in production code}.
+		\item \texttt{using namespace std;} (convenient for this example but \textbg{dangerous, never do this}).
 	\end{itemize}
-	\bigskip
-	\begin{alertblock}{Never \texttt{using namespace} in a header file}
-		\justifying
-		A \texttt{using namespace} directive in a \texttt{.hpp} file \textbg{pollutes the namespace} of every translation unit that includes it, potentially causing the exact collisions namespaces were designed to prevent.
-		Confine it to \texttt{.cpp} files, and only use it deliberately.
-	\end{alertblock}
 \end{frame}
-
-% --- Type aliases ---
 \begin{frame}{Namespaces}{Taming long names}
 	\justifying
 	Namespaces and templates combined can produce \textbg{very long type names}.\\
-	C++ provides two ways to create \textbf{aliases}:
+	C++ provides two ways to create \textbg{aliases}:
 	\begin{itemize}
-		\item \texttt{typedef} inherited from C: \texttt{typedef std::vector<int> IntVec;};
-		\item \textbg{\texttt{using}} alias (preferred in modern C++): \texttt{using IntVec = std::vector<int>;}.
+		\item \texttt{typedef} inherited from C: \texttt{typedef std::vector<int> IntVec;}
+		\item \texttt{using} alias (preferred in modern C++): \texttt{using IntVec = std::vector<int>;}
 	\end{itemize}
 	\bigskip
 	The \texttt{using} form is preferred because it is \textbg{more readable}, supports templates, and is consistent with the rest of modern C++ syntax.\\

@@ -1,15 +1,15 @@
-% Section - RAII
+% Section 3 - RAII
 % Roberto Masocco <roberto.masocco@uniroma2.it>
 % April 12, 2026
 
 % ### RAII ###
 \section{RAII}
-\graphicspath{{figs/raii/}}
+\graphicspath{{figs/section3/}}
 
-% --- The resource problem ---
+% --- RAII ---
 \begin{frame}{RAII}{The resource problem}
 	\justifying
-	A \textbg{resource} is anything that must be \textbf{acquired} before use and \textbf{released} after use:
+	A \textbg{resource} is anything that must be \textbg{acquired before use} and \textbg{released after use}:
 	\begin{itemize}
 		\item \textbg{memory} allocated on the heap (\texttt{malloc}/\texttt{free}, \texttt{new}/\texttt{delete});
 		\item \textbg{file descriptors} opened with \texttt{fopen}/\texttt{open};
@@ -21,12 +21,10 @@
 	\bigskip
 	\begin{alertblock}{The classic bug}
 		\justifying
-		An early \texttt{return}, a \texttt{goto}, or an unhandled error condition leaves a resource unreleased.
-		In a long-running system this causes \textbg{resource leaks} that accumulate over time.
+		An early \texttt{return}, a \texttt{goto}, or an unhandled error condition leaves a \textbr{resource unreleased}.\\
+		In a long-running system this causes \textbr{resource leaks} that accumulate over time.
 	\end{alertblock}
 \end{frame}
-
-% --- The RAII idiom ---
 \begin{frame}{RAII}{Resource Acquisition Is Initialization}
 	\begin{block}{Definition of RAII}
 		\justifying
@@ -34,7 +32,7 @@
 	\end{block}
 	\justifying
 	\bigskip
-	Because the destructor is \textbg{guaranteed to run} when an object goes out of scope, resource release becomes \textbf{automatic and unconditional}:
+	Because the destructor is \textbg{guaranteed to run} when an object goes out of scope, resource release becomes \textbg{automatic and unconditional}:
 	\begin{itemize}
 		\item no matter how many \texttt{return} statements exist in a function;
 		\item no matter which branch of an \texttt{if}/\texttt{switch} is taken;
@@ -47,25 +45,21 @@
 		Every major abstraction in the standard library is built on it.
 	\end{block}
 \end{frame}
-
-% --- RAII in practice ---
 \begin{frame}{RAII}{RAII in practice}
 	\justifying
 	The idiom is not a language feature — it is a \textbg{design pattern} that the language makes reliable through its object lifetime rules.\\
-	\bigskip
-	You have already seen it in your OS course, just without the name:
+	\smallskip
+	Some examples of objects that use this idiom in C++, from your OS course:
 	\begin{itemize}
 		\item a \textbg{mutex wrapper} that locks on construction and unlocks on destruction;
 		\item a \textbg{file handle} class that opens on construction and closes on destruction;
 		\item a \textbg{memory buffer} class that allocates on construction and deallocates on destruction.
 	\end{itemize}
-	\bigskip
+	\smallskip
 	In C++ the standard library provides \textbg{ready-made RAII wrappers} for all common resources:
 	\begin{itemize}
 		\item \texttt{std::unique\_ptr}, \texttt{std::shared\_ptr} for heap memory;
 		\item \texttt{std::lock\_guard}, \texttt{std::unique\_lock} for mutexes;
 		\item \texttt{std::fstream} for files.
 	\end{itemize}
-	\bigskip
-	We will build one from scratch in the code examples to make the mechanism concrete.
 \end{frame}
