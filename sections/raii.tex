@@ -11,9 +11,9 @@
 	\justifying
 	A \textbg{resource} is anything that must be \textbg{acquired before use} and \textbg{released after use}:
 	\begin{itemize}
-		\item \textbg{memory} allocated on the heap (\texttt{malloc}/\texttt{free}, \texttt{new}/\texttt{delete});
-		\item \textbg{file descriptors} opened with \texttt{fopen}/\texttt{open};
+		\item \textbg{memory} allocated on the heap (\texttt{malloc}/\texttt{free} in C, \texttt{new}/\texttt{delete} in C++);
 		\item \textbg{mutex locks} acquired with \texttt{pthread\_mutex\_lock};
+		\item \textbg{file descriptors} opened with \texttt{fopen}/\texttt{open};
 		\item \textbg{network sockets}, hardware handles, GPU buffers...
 	\end{itemize}
 	\bigskip

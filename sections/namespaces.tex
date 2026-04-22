@@ -15,7 +15,7 @@
 	\begin{itemize}
 		\item \textbg{two libraries} may define a function named \texttt{init()}, a struct named \texttt{Node}, or a constant named \texttt{MAX\_SIZE};
 		\item the linker cannot resolve the \textbg{collision};
-		\item C works around this with \textbg{name prefixes} by convention: \texttt{pthread\_mutex\_t}, \texttt{SDL\_Init()}, \texttt{PTHREAD\_MUTEX\_INITIALIZER}...
+		\item C works around this with \textbg{name prefixes} by convention: \texttt{pthread\_create}, \texttt{PTHREAD\_MUTEX\_INITIALIZER}, \texttt{sched\_setscheduler}...
 	\end{itemize}
 	\bigskip
 	\begin{block}{}
@@ -42,22 +42,22 @@
 \end{frame}
 \begin{frame}{Namespaces}{\texttt{using} declarations and directives}
 	\justifying
-	Writing the full namespace prefix every time can become verbose.\\
+	Writing the full namespace prefix every time may become verbose.\\
 	C++ provides two mechanisms to shorten names.\\
 	\bigskip
-	A \texttt{using} \textbg{declaration} introduces a \textbg{single name} into the current scope:
+	A \texttt{using} \textbg{declaration introduces a single name} into the current scope:
 	\begin{itemize}
 		\item \texttt{using std::vector;} — after this, \texttt{vector} alone refers to \texttt{std::vector}.
 	\end{itemize}
 	\bigskip
-	A \texttt{using namespace} \textbg{directive} imports \textbg{all names} from a namespace:
+	A \texttt{using namespace} \textbg{directive imports all names} from a namespace:
 	\begin{itemize}
-		\item \texttt{using namespace std;} (convenient for this example but \textbg{dangerous, never do this}).
+		\item \texttt{using namespace std;} (\texttt{std} convenient to write but \textbg{dangerous, never do this}).
 	\end{itemize}
 \end{frame}
 \begin{frame}{Namespaces}{Taming long names}
 	\justifying
-	Namespaces and templates combined can produce \textbg{very long type names}.\\
+	Namespaces and templates combined may produce \textbg{very long type names}.\\
 	C++ provides two ways to create \textbg{aliases}:
 	\begin{itemize}
 		\item \texttt{typedef} inherited from C: \texttt{typedef std::vector<int> IntVec;}

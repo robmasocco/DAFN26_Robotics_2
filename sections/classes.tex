@@ -23,6 +23,27 @@
 		\item \texttt{class} is used when \textbg{encapsulation} and \textbg{operations} matter.
 	\end{itemize}
 \end{frame}
+\begin{frame}[fragile]{Classes}
+  \begin{columns}
+    \column{.9\linewidth}
+		\begin{lstlisting}[style=codebeamer, language=C++, caption=Example of a C++ class.]
+class MyClass : public ParentClass
+{
+public:
+  MyClass();
+  ~MyClass();
+  int get_int() { return variable_int_member_; }
+  // ...
+protected:
+  // ...
+private:
+  int variable_int_member_ = 0;
+  double variable_double_member_ = 0.0;
+  // ...
+};
+    \end{lstlisting}
+  \end{columns}
+\end{frame}
 \begin{frame}{Classes}{Access specifiers}
 	\justifying
 	Access specifiers control the \textbg{visibility} of class members to the outside world.\\
@@ -38,16 +59,16 @@
 	\bigskip
 	Good practice is to expose only what is \textbg{necessary}:
 	\begin{itemize}
-		\item \textbg{data members} are almost always \texttt{private};
+		\item \textbg{data members} are almost always \texttt{private}, accessible via \textbg{getters}/\textbg{setters};
 		\item the \textbg{public interface} is kept minimal and stable.
 	\end{itemize}
 \end{frame}
 \begin{frame}{Classes}{Member functions and the \texttt{this} pointer}
 	\justifying
 	Functions declared inside a class are called \textbg{member functions} (or \emph{methods}).\\
-    They have \textbg{direct access to all data members of the class}, regardless of access specifiers.\\
+  They have \textbg{direct access to all data members of the class}, regardless of access specifiers.\\
 	\bigskip
-	Inside any non-static member function, the keyword \texttt{this} is an implicit \textbg{pointer to the object on which the function was called}.\\
+	Inside any (non-static) member function, the keyword \texttt{this} is an implicit \textbg{pointer to the object on which the function was called}.\\
 	\bigskip
 	Member functions that \textbg{do not modify the object} should be declared \texttt{const}: the \textbg{compiler} then enforces the constraint.
 \end{frame}
@@ -83,18 +104,18 @@
 	The \textbg{header} contains
 	\begin{itemize}
 		\item the \textbg{class declaration} with all member names and types;
-		\item \textbg{inline function definitions} (small, frequently called functions).
+		\item \texttt{inline} \textbg{function definitions} (small, frequently called functions).
 	\end{itemize}
 	\bigskip
 	The \textbg{source file} contains
 	\begin{itemize}
 		\item the full \textbg{definitions} of all non-inline member functions;
-		\item member function names are qualified with \texttt{ClassName::}.
+		\item member function names are \textbg{prefixed} with \texttt{ClassName::} (their \textbg{namespace}).
 	\end{itemize}
 	\bigskip
 	\begin{block}{Why split?}
 		\justifying
 		The header is the \textbf{public contract} of the class — it is what other translation units include.
-		Keeping implementation in \texttt{.cpp} files reduces \textbf{compile-time dependencies} and hides internals.
+		Keeping implementation in \texttt{.cpp} files reduces compile-time dependencies and \textbf{hides internals}.
 	\end{block}
 \end{frame}

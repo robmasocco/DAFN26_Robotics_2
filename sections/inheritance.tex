@@ -22,7 +22,7 @@
 		\item it may \textbg{add} new data members and member functions;
 		\item it may \textbg{override} member functions defined in the base.
 	\end{itemize}
-	\textbg{Its constructor must explicitly call a base constructor}.
+	\textbg{Its constructor must explicitly call a base constructor.}
 \end{frame}
 \begin{frame}{Inheritance}{Virtual dispatch}
 	\justifying
@@ -40,7 +40,7 @@
 		\centering
 		\texttt{override} is not required, but you should always use it for clarity.
 	\end{block}
-  \textbg{Destructors} are sometimes \texttt{virtual} (why? Think. More on this shortly...)
+  \textbg{Destructors} are often \texttt{virtual} (why? Think. More on this shortly...)
 \end{frame}
 \begin{frame}{Inheritance}{The vtable}
 	\justifying
@@ -64,7 +64,7 @@
 \end{frame}
 \begin{frame}{Inheritance}{Pure virtual functions and abstract classes}
 	\justifying
-	A \textbg{pure virtual function} is a virtual function declared with \texttt{= 0} and \textbg{not defined} in the base class.\\
+	A \textbg{pure virtual function} is a virtual function \textbg{declared with} \texttt{= 0} and \textbg{not defined in the base class}.\\
 	\bigskip
 	A class with at least one pure virtual function is \textbg{abstract}:
 	\begin{itemize}
