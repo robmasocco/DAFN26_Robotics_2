@@ -1,6 +1,6 @@
 # DAFN26_Robotics_2
 
-DAFN 2026 - Robotics 2: From C to C++ - Objects, references, and namespaces
+DAFN 2026 - Robotics 2: From C to C++ I - Objects, references, and namespaces
 
 LaTeX source code and build files.
 
